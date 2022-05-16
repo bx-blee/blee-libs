@@ -1,0 +1,36 @@
+#+title:  blee-lib
+#+OPTIONS: toc:4
+
+*blee-lib*: Blee General Library
+
+*blee-lib* is a Blee package that functions as a central repository
+for Blee foundational capabilities of blee.
+As a Blee package, it conforms to Blee COMEEGA.
+Examples are provided.
+
+* Table Of Contents     :TOC:
+- [[#overview][Overview]]
+  - [[#describe-the-structure-of-this-library][Describe the structure of this library]]
+- [[#dependencies-and-pre-requisist][Dependencies And Pre-Requisist]]
+  - [[#comment-block-comeega-poly-dblock][comment-block, comeega, poly-dblock]]
+- [[#naming-convetions][Naming Convetions]]
+- [[#examples][Examples]]
+- [[#implemetation-plan][Implemetation plan]]
+  - [[#start-with-blee-dblocks-lib][Start with blee-dblocks-lib]]
+  - [[#setup-the-examples-structure][Setup the examples structure]]
+
+* Overview
+** TODO Describe the structure of this library
+
+* Dependencies And Pre-Requisist
+** comment-block, comeega, poly-dblock
+
+* Naming Convetions
+
+* Examples
+
+* Implemetation plan
+
+** Start with blee-dblocks-lib
+
+** Setup the examples structure

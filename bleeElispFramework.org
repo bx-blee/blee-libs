@@ -1,0 +1,225 @@
+#+title:  Blee Elisp Framework
+#+OPTIONS: toc:4
+
+
+* Table Of Contents     :TOC:
+- [[#overview][Overview]]
+  - [[#describe-the-structure-of-this-library][Describe the structure of this library]]
+- [[#dependencies-and-pre-requisist][Dependencies And Pre-Requisist]]
+  - [[#comment-block-comeega-poly-dblock][comment-block, comeega, poly-dblock]]
+- [[#naming-convetions][Naming Convetions]]
+- [[#examples][Examples]]
+- [[#implemetation-plan][Implemetation plan]]
+  - [[#start-with-blee-dblocks-lib][Start with blee-dblocks-lib]]
+  - [[#setup-the-examples-structure][Setup the examples structure]]
+-  [[#blee-variable-naming-conventions][Blee Variable Naming Conventions]]
+  - [[#][+]]
+  - [[#also-see-httpswwwclikinetnamingconventions][Also see https://www.cliki.net/Naming+conventions]]
+  - [[#-1][+]]
+  - [[#lisp-reserved-characters][Lisp reserved characters]]
+  - [[#letters-not-used---][Letters NOT used '@' '#' ',']]
+  - [[#letters-used------------][Letters used ':' '/' '|' '~' '*' '$' '<' '>' '+' '&' '%' '.']]
+  - [[#-2][+]]
+  - [[#global-variables-conventions][Global Variables Conventions]]
+  - [[#namesapcemodsubmodcmnd-name-----------commands-as-interactive][nameSapce:mod:subMod/cmnd-name          # Commands as interactive]]
+  - [[#namesapcemodsubmodfunc-name-----------exposed-functions][nameSapce:mod:subMod|func-name          # Exposed functions]]
+  - [[#namesapcemodsubmodfunc-name-----------internalprivate-functions---equivalent-of-namesapcemodsubmodfunc-name][nameSapce:mod:subMod~func-name          # Internal/Private functions --Equivalent of $nameSapce:mod:subMod|func-name]]
+  - [[#namesapcemodsubmodmacro-name----------macros][nameSapce:mod:subMod$macro-name         # macros]]
+  - [[#namesapcemodsubmodvar-name------------variables][nameSapce:mod:subMod:var-name           # Variables]]
+  - [[#namesapcemodsubmodvar-name------------constantes][nameSapce:mod:subMod::var-name           # Constantes]]
+  - [[#namesapcemodsubmodvar-name-----------structures][nameSapce:mod:subMod:var-name:          # Structures]]
+  - [[#namesapcemodsubmodfunc-name----------cl-style-exposed-functions][nameSapce:mod:subMod|func-name*         # CL style Exposed functions]]
+  - [[#-3][+]]
+  - [[#blee-namespaces-are-one-of-blee-bap-bcg-bide-bx-bxde----bleenamespaces][Blee nameSpaces are one of (blee: bap: bcg: bide: bx: bxde:)    [[bleeNameSpaces]]]]
+  - [[#some-mod-and-submod-are-defined-below----bleemodules][Some mod and subMod are defined below    [[bleeModules]]]]
+  - [[#vars-and-module-names-could-be-dash-separted-camelcase-or-a-combination-of][Vars and module names could be dash separted, camelCase or a combination of:]]
+  - [[#camelcase-is-often-used-to-express-objects-dashed-augments-objects-with-actions][CamelCase is often used to express objects. dashed augments objects with actions.]]
+- [[#local-variables-conventions][Local Variables Conventions]]
+  -  [[#args-------prefix-indicates-that-variable-was-passed-as-an-argument-to-a-function-positional-or-named-as-in-funcname-arg1-arg2][<args   -- < prefix indicates that variable was passed as an argument to a function, positional or named as in (funcName <arg1 <arg2)]]
+  -  [[#deprecated--args-------prefix-indicates-that-variable-was-passed-as-an-argument-to-a-function-positional-or-named-as-in-funcname-arg1-arg2][Deprecated :: @args   -- @ prefix indicates that variable was passed as an argument to a function, positional or named as in (funcName @arg1 @arg2)]]
+  -  [[#var--------prefix-for-let-indicates-that-variable-is-local-and-likely-in-the-context-of-let--var1][$var    -- $ prefix for let indicates that variable is local and likely in the context of: (let  ($var1))]]
+  - [[#var--------prefix-for-functions-indicates-that-variable-should-not-be-considered-global-and-its-effective-scope-is-file-or-module][$var    -- $ prefix for functions indicates that variable should not be considered global and its effective scope is file or module]]
+  -  [[#var--------prefix-indicates-buffer-local-variables-as-in-buflocal1-----defvar-local--setq-local-][~var    -- ~ prefix indicates buffer local variables as in: ~bufLocal1  -- (defvar-local ...) (setq-local ...)]]
+- [[#general-name-spaces-and-modules--bleenamespaces---blee-bap-bcg-bide-bf-bx-ext-][General Name Spaces And Modules  <<bleeNameSpaces>> |  blee: bap: bcg: bide: bf: bx: ext: |]]
+  - [[#needs-to-be-revisited----replace-blee-with-bx-uniformly-and-bxde-for-bystar-oid-related][needs to be revisited -- replace blee: with bx: uniformly and bxde: for (ByStar Oid) related]]
+  -  [[#blee-top-level-features-and-libraries-and-processes-][blee: Top Level Features And Libraries And Processes |]]
+  -  [[#bap-adopted-packages-are-for-standalone-adopted-packages-configuration-and-enhancements][bap: (adopted packages) are for standalone adopted packages configuration and enhancements]]
+  -  [[#bnp-native-packages-are-for-standalone-native-packages-configuration-and-enhancements][bnp: (native packages) are for standalone native packages configuration and enhancements]]
+  -  [[#bcg-capability-grouping-are-for-interdependent-multiple-packages-configuration-and-enhancements][bcg: (capability grouping) are for interdependent multiple packages configuration and enhancements]]
+  -  [[#bide-blee-ide-for-programming-languages][bide: (Blee IDE) for programming languages]]
+  -  [[#bf-blee-facet----also-similar-to-bcg-when-natively-developed][bf: (Blee Facet) -- Also similar to bcg when natively developed]]
+  -  [[#bx--bystar-oid-related][bx:  (ByStar Oid) related]]
+  -  [[#bxde--bystar-oid-related][bxde:  (ByStar Oid) related]]
+  -  [[#bue-bystar-user-environment-setq-buenotify-visualbell-][bue: (ByStar User Environment) (setq bue:notify 'visualBell) |]]
+  -  [[#ext-extensions-to-other-packages-extorg-xxx][ext: Extensions to other packages (ext:org-xxx)]]
+- [[#specific-name-spaces-and-modules][Specific Name Spaces And Modules]]
+  -  [[#mcdt-mail-composition-distribution-and-tracking][mcdt: Mail Composition, Distribution And Tracking]]
+- [[#blee-modules--bleemodules][Blee Modules:  <<bleeModules>>]]
+  - [[#bffont-bfserver][bf:font bf:server]]
+  - [[#bapmodule][bap:module]]
+  - [[#top-level-integrators--bleebootprocess][Top Level Integrators:  [[BleeBootProcess]]]]
+  - [[#blee-package-adoption-overview][Blee Package Adoption Overview:]]
+- [[#blee-adopted-package-bap][Blee Adopted Package: bap:]]
+  -   [[#for-standalone-packages----not-a-bcg-blee-capability-grouping][For standalone packages -- not a bcg: (blee capability grouping)]]
+  -   [[#file-name-bap-pkgnameel][File Name: bap-pkgName.el]]
+  -   [[#bappkgname][bap:pkgName]]
+  -   [[#bappkgnameusageenabled-p][bap:pkgName:usage:enabled-p]]
+  -   [[#bappkgnamefullupdate][bap:pkgName:full/update]]
+  -   [[#bappkgnameinstallupdate][bap:pkgName:install/update]]
+  -   [[#bappkgnameconfigmain][bap:pkgName:config/main]]
+  -   [[#bappkgnamekbdupdate][bap:pkgName:kbd/update]]
+  -   [[#bappkgnamemenuupdate][bap:pkgName:menu/update]]
+- [[#blee-native-package-bnp][Blee Native Package: bnp:]]
+- [[#blee-capability-grouping-bcg][Blee Capability Grouping: bcg:]]
+  -   [[#for-interdependent-multiple-packages-packages][For interdependent multiple packages packages]]
+  -   [[#file-name-bcg-groupingnameel][File Name: bcg-groupingName.el]]
+  -   [[#bcggroupingname][bcg:groupingName]]
+  -   [[#bcggroupingnamebappkgnameinstallasneeded][bcg:groupingNamebap:pkgName:install:asNeeded]]
+  -   [[#bcggroupingnamebappkgnameconfigmain][bcg:groupingNamebap:pkgName:config:main]]
+  -   [[#bcggroupingnamebappkgnamekbdupdate][bcg:groupingNamebap:pkgName:kbd:update]]
+  -   [[#bcggroupingnamebappkgnamemenuupdate][bcg:groupingNamebap:pkgName:menu:update]]
+- [[#files-naming][Files Naming:]]
+
+* Overview
+** TODO Describe the structure of this library
+
+* Dependencies And Pre-Requisist
+** comment-block, comeega, poly-dblock
+
+* Naming Convetions
+
+* Examples
+
+* Implemetation plan
+
+** Start with blee-dblocks-lib
+
+** Setup the examples structure
+
+*  Blee Variable Naming Conventions
+** +
+** Also see https://www.cliki.net/Naming+conventions
+** +
+** Lisp reserved characters
+** Letters NOT used '@' '#' ','
+** Letters used ':' '/' '|' '~' '*' '$' '<' '>' '+' '&' '%' '.'
+** +
+** Global Variables Conventions
+** nameSapce:mod:subMod/cmnd-name          # Commands as interactive
+** nameSapce:mod:subMod|func-name          # Exposed functions
+** nameSapce:mod:subMod~func-name          # Internal/Private functions --Equivalent of $nameSapce:mod:subMod|func-name
+** nameSapce:mod:subMod$macro-name         # macros
+** nameSapce:mod:subMod:var-name           # Variables
+** nameSapce:mod:subMod::var-name           # Constantes
+** nameSapce:mod:subMod:var-name:          # Structures
+** nameSapce:mod:subMod|func-name*         # CL style Exposed functions
+** +
+** Blee nameSpaces are one of (blee: bap: bcg: bide: bx: bxde:)    [[bleeNameSpaces]]
+** Some mod and subMod are defined below    [[bleeModules]]
+** Vars and module names could be dash separted, camelCase or a combination of:
+** CamelCase is often used to express objects. dashed augments objects with actions.
+* Local Variables Conventions
+**  <args   -- < prefix indicates that variable was passed as an argument to a function, positional or named as in (funcName <arg1 <arg2)
+**  Deprecated :: @args   -- @ prefix indicates that variable was passed as an argument to a function, positional or named as in (funcName @arg1 @arg2)
+**  $var    -- $ prefix for let indicates that variable is local and likely in the context of: (let  ($var1))
+** $var    -- $ prefix for functions indicates that variable should not be considered global and its effective scope is file or module
+    nameSpace and mod can be combined with $.
+**  ~var    -- ~ prefix indicates buffer local variables as in: ~bufLocal1  -- (defvar-local ...) (setq-local ...)
+* General Name Spaces And Modules  <<bleeNameSpaces>> |  blee: bap: bcg: bide: bf: bx: ext: |
+** TODO needs to be revisited -- replace blee: with bx: uniformly and bxde: for (ByStar Oid) related
+     SCHEDULED: <2020-08-16 Sun>
+**  blee: Top Level Features And Libraries And Processes |
+***  blee:version  blee/version
+**  bap: (adopted packages) are for standalone adopted packages configuration and enhancements
+     For example: bap:magit
+**  bnp: (native packages) are for standalone native packages configuration and enhancements
+     For example: bap:magit
+**  bcg: (capability grouping) are for interdependent multiple packages configuration and enhancements
+     For example: bcg:mail:out/ bcg:mail:in/ bcg:core/
+**  bide: (Blee IDE) for programming languages
+     For example: bide:py/ bide:bash/
+**  bf: (Blee Facet) -- Also similar to bcg when natively developed
+     For example bf:font/  bf:bidi/ bf:m17n/ bf:server/
+**  bx:  (ByStar Oid) related
+**  bxde:  (ByStar Oid) related
+**  bue: (ByStar User Environment) (setq bue:notify 'visualBell) |
+**  ext: Extensions to other packages (ext:org-xxx)
+
+* Specific Name Spaces And Modules
+**  mcdt: Mail Composition, Distribution And Tracking
+* Blee Modules:  <<bleeModules>>
+    Modules some times map to packages and sometimes to groupings and sometimes to capability groupings
+** bf:font bf:server
+** bap:module
+
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 2 :title "Boot Top Level Integrators"  :extraInfo ""
+####+END
+** Top Level Integrators:  [[BleeBootProcess]]
+***   file:/bisos/blee/env/boot/boot-blee.el
+***   /bisos/blee/env/boot/boot-xxx.el  -- contingent on eg 27f
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 2 :title "Package Installation And Adoption"  :extraInfo "-- elpa packages"
+**/Package Installation And Adoption:/ |]]  -- elpa packages  [[elisp:(org-shifttab)][<)]] E|
+####+END
+** Blee Package Adoption Overview:
+*** TODO Build a template for adoption of packages in blee model. https://github.com/jwiegley/use-package
+*** Old File Architecture
+
+1) bac-pkgName.el   (provide 'bac-pkgName)
+2) bac-pkgName-ext.el
+3) (require 'bac-pkgName)
+
+***  In boot-ver.el or in boot-common.el
+  ;;;#+BEGIN: blee:pkg:adopt :eanble :org-level 2 pkgName
+  (require 'bac-pkgName)
+  ;;;#+END:
+***  bac-pkgName.el
+
+  ;;;#+BEGIN: blee:pkg:adoptionMessage :enable :org-level 2 pkgName
+  (message "ByStar pkgName LOADING")
+  ;;;#+END:
+
+  (defun bac:pkg:shouldBeAvailable:pkgName ()
+  )
+
+  (defun bac:pkg:shouldBeEnabled:pkgName ()
+  )
+
+  ;;;#+BEGIN: blee:pkg:makeAvailable :enable :org-level 2 pkgName
+  (when (bac:pkg:shouldBeAvailable:pkgName)
+     (require 'bac-pkgName-ext.el)
+     (bac:pkg:makeAvailable:pkgName)
+     )
+  ;;;#+END:
+
+  ;;;#+BEGIN: blee:pkg:enable  :enable :org-level 2 pkgName
+  (when (bac:pkg:shouldBeEnabled:pkgName)
+     (bap:pkg:enable:pkgName))
+  ;;;#+END:
+
+  (provide 'bac-pkgName)
+***  bac-pkgName-ext.el
+  (provide 'bap-pkgName-ext)
+
+* Blee Adopted Package: bap:
+**   For standalone packages -- not a bcg: (blee capability grouping)
+**   File Name: bap-pkgName.el
+**   bap:pkgName
+**   bap:pkgName:usage:enabled-p
+**   bap:pkgName:full/update
+**   bap:pkgName:install/update
+**   bap:pkgName:config/main
+**   bap:pkgName:kbd/update
+**   bap:pkgName:menu/update
+
+* Blee Native Package: bnp:
+
+* Blee Capability Grouping: bcg:
+**   For interdependent multiple packages packages
+**   File Name: bcg-groupingName.el
+**   bcg:groupingName
+**   bcg:groupingNamebap:pkgName:install:asNeeded
+**   bcg:groupingNamebap:pkgName:config:main
+**   bcg:groupingNamebap:pkgName:kbd:update
+**   bcg:groupingNamebap:pkgName:menu:update
+
+* Files Naming:

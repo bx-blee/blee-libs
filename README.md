@@ -1,2 +1,0 @@
-# blee-libs
-Blee Libraries
