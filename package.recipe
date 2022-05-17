@@ -1,0 +1,4 @@
+(blee-libs
+  :fetcher github
+  :repo "bx-blee/blee-libs"
+  :files ("*.el"))
