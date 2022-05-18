@@ -115,37 +115,6 @@ Uses [[b::call-stack]].
 
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:log:func|invocation"
-(orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b:log:func|invocation>> [[elisp:(org-shifttab)][<)]] E|
-" orgCmntEnd)
-(defun b:log:func|invocation (
-;;;#+END:
-                              <thisFunc)
-   " #+begin_org
-** DocStr: Log the invocation of =<thisFunc=. Func (line-number-at-pos)
-and side-effects are documented here
-#+end_org "
-   (let* (
-          ($fileName (or load-file-name buffer-file-name))
-          ($lineNu (line-number-at-pos)) ;;; This is probably not correct.
-         )
-        (message
-         (s-lex-format
-          "b:log -- invocation of: ${<thisFunc} from ${$fileName}::${$lineNu}"))))
-
-(orgCmntBegin "
-** Basic Usage:
-#+BEGIN_SRC emacs-lisp
-(b:log:func|invocation "b:log:func|invocation")
-#+END_SRC
-
-#+RESULTS:
-: b:log -- invocation of: b:log:func|invocation from /bisos/git/auth/bxRepos/blee/blee-libs/b-func.el::140
-
-" orgCmntEnd)
-
-
 ;;;#+BEGIN:  b:elisp:defs/defmacro :defName "b:func$entry"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  =defmacro= <<b:func$entry>> [[elisp:(org-shifttab)][<)]] E|
@@ -157,7 +126,11 @@ and side-effects are documented here
 ** DocStr: Uses  [[b:func:compileTimeName]] to figure what function we are in and acts on that.
 #+end_org "
    `(progn
-      (b:log:func|invocation (b:func:compileTimeName))))
+      (list 
+       (b:func:compileTimeName)
+       (or load-file-name buffer-file-name)
+       (line-number-at-pos)  ;;; This is not right. It is place holder for now.
+       )))
 
 
 (orgCmntBegin "

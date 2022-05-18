@@ -1,7 +1,7 @@
-;;; blee-libs.el --- Blee Common and General Libraries  -*- lexical-binding: t; -*-
+;;; b-pkg.el --- b:pkg supports native and component adotion  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary: Main Pkg File providing b:pkg:plee-libs|version
+* Summary: supports for native and component adotion and grouping
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
@@ -26,8 +26,11 @@
 ;;;#+END:
 
 (orgCmntBegin "
+* Commentary, Model and Terminology:
 * Relevant Panels:
-** [[file:/bisos/git/auth/bxRepos/blee-binders/blee-core/blee-pkgs/blee-libs/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/panels/blee-core/mail/model/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
+* Planned Improvements:
 " orgCmntEnd)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "REQUIRES" :extraInfo "Imports"
@@ -36,60 +39,84 @@
 " orgCmntEnd)
 ;;;#+END:
 
-(require 'b-file)
-(require 'b-func)
-
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-(defvar b:pkg:blee-libs:version "0.1"
-   " #+begin_org
-** =b:pkg:blee-libs:version= version number of the entirety of blee-libs.
-#+end_org "
-  )
-
-
-;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo ""
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg:blee-libs/version"
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg|infoBasedOnFile"
 (orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b:pkg:blee-libs|version>> [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  =defun= <<b:pkg|infoBasedOnFile>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(defun b:pkg:blee-libs/version (
+(defun b:pkg|infoBasedOnFile (
 ;;;#+END:
-                                )
+                                 <fileName)
    " #+begin_org
-** DocStr: blee-libs package version number.
+** DocStr: Actions based on =parameters= and *returnValues*
+and side-effects are documented here
 #+end_org "
-   (interactive)
-   b:pkg:blee-libs:version)
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($result nil)
+          ($sansExtension (file-name-sans-extension <fileName))
+          ($extension (file-name-extension <fileName))
+          ($splitted (s-split "-" $sansExtension))
+         )
+     (unless (string= $extension "Nel")
+       (b::error "unexpected input"))
+     (when (string= $extension "el")     
+       (setq $result $splitted))
+     $splitted))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:pkg:blee-libs/version)
+(b:pkg|infoBasedOnFile (file-name-nondirectory buffer-file-name))
 #+END_SRC
-
-#+RESULTS:
-: 0.1
-
 " orgCmntEnd)
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg|topLineStr"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:pkg|topLineStr>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:pkg|topLineStr (
+;;;#+END:
+                        )
+   " #+begin_org
+** DocStr: Actions based on =parameters= and *returnValues*
+and side-effects are documented here
+#+end_org "
+   (let* (
+          ($result "")
+          ($fileName (file-name-nondirectory buffer-file-name))
+         )
+     (setq $result
+           (s-lex-format ";;; ${$fileName} --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-\n"))
+        $result))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:pkg|topLineStr)
+#+END_SRC
+" orgCmntEnd)
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'blee-libs)
+(provide 'b-pkg)
 ;;;#+END:
 
 ;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
-" orgCmntEnd);;; local variables:
+" orgCmntEnd)
+;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
 ;;;#+END:

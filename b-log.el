@@ -1,7 +1,8 @@
-;;; blee-libs.el --- Blee Common and General Libraries  -*- lexical-binding: t; -*-
+;;; b-log.el --- Blee Logging Library  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary: Main Pkg File providing b:pkg:plee-libs|version
+* Name Spaces== b:log b:error b:warning
+* Summary:
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
@@ -26,8 +27,11 @@
 ;;;#+END:
 
 (orgCmntBegin "
+* Commentary, Model and Terminology:
 * Relevant Panels:
-** [[file:/bisos/git/auth/bxRepos/blee-binders/blee-core/blee-pkgs/blee-libs/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/panels/blee-core/mail/model/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
+* Planned Improvements:
 " orgCmntEnd)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "REQUIRES" :extraInfo "Imports"
@@ -36,60 +40,100 @@
 " orgCmntEnd)
 ;;;#+END:
 
-(require 'b-file)
-(require 'b-func)
-
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-(defvar b:pkg:blee-libs:version "0.1"
-   " #+begin_org
-** =b:pkg:blee-libs:version= version number of the entirety of blee-libs.
-#+end_org "
-  )
-
-
-;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo ""
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg:blee-libs/version"
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:log|entry"
 (orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b:pkg:blee-libs|version>> [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  =defun= <<b:log|entry>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(defun b:pkg:blee-libs/version (
+(defun b:log|entry (
 ;;;#+END:
-                                )
+                <inHere)
    " #+begin_org
-** DocStr: blee-libs package version number.
+** DocStr: return =<inHere=, unchanged. Logs =<inHere=.
 #+end_org "
-   (interactive)
-   b:pkg:blee-libs:version)
+   (let* (
+          ($result <inHere)
+          ($funcName)
+          ($hereFile)
+          ($hereLine)          
+         )
+     (when <inHere
+       (setq $funcName (first <inHere))
+       (setq $hereFile (second <inHere))
+       (setq $hereLine (third <inHere))          
+       )
+     (message
+      (s-lex-format
+       "b:log|entry:: ${$funcName} from ${$hereFile}::${$hereLine}"))
+     $result))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:pkg:blee-libs/version)
+(b::error nil "Some Error")
 #+END_SRC
+" orgCmntEnd)
 
-#+RESULTS:
-: 0.1
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b::error"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b::error>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b::error (
+;;;#+END:
+                <inHere <errorStr)
+   " #+begin_org
+** DocStr: Actions based on =parameters= and *returnValues*
+and side-effects are documented here
+#+end_org "
+   (let* (
+          ($result nil)
+          ($funcName)
+          ($hereFile)
+          ($hereLine)          
+          ($inHereStr "")
+          ($fullErrStr "")
+         )
+     (when <inHere
+       (setq $funcName (first <inHere))
+       (setq $hereFile (second <inHere))
+       (setq $hereLine (third <inHere))          
+       (setq $inHereStr
+             (s-lex-format
+              "${$funcName} -- ${$hereFile}::${$hereLine}")))
+     (setq $fullErrStr
+           (s-lex-format
+            "b:: ${<errorStr} -- ${$inHereStr}"))
+     (user-error $fullErrStr)
+     $result))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b::error nil "Some Error")
+#+END_SRC
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'blee-libs)
+(provide 'b-log)
 ;;;#+END:
 
 ;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
-" orgCmntEnd);;; local variables:
+" orgCmntEnd)
+;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
 ;;;#+END:
