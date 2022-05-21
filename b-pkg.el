@@ -39,11 +39,31 @@
 " orgCmntEnd)
 ;;;#+END:
 
+(require 'b-func)
+(require 'b-log)
+
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
+
+(orgCmntBegin "
+* defconst <<b:pkg:adoption::types>>
+" orgCmntEnd)
+(defconst
+  b:pkg:adoption::types
+  `(
+    bnpa "bnpa"  ; Blee Native Package Adoption
+    bnpg "bnpg"  ; Blee Native Packages Grouping
+    bcpa "bcpa"  ; Blee Component Package Adoption
+    bcpg "bcpg"  ; Blee Component Packages Grouping
+    )
+  " #+begin_org
+  ** Enumeration of Blee pkg adoption types.
+#+end_org "
+)
+
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
@@ -60,27 +80,33 @@
 ;;;#+END:
                                  <fileName)
    " #+begin_org
-** DocStr: Actions based on =parameters= and *returnValues*
-and side-effects are documented here
+** DocStr: Given =<fileName= return relevant as list.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
           ($result nil)
           ($sansExtension (file-name-sans-extension <fileName))
           ($extension (file-name-extension <fileName))
-          ($splitted (s-split "-" $sansExtension))
+          ($splitted (s-split ":" $sansExtension))
          )
-     (unless (string= $extension "Nel")
-       (b::error "unexpected input"))
-     (when (string= $extension "el")     
-       (setq $result $splitted))
-     $splitted))
+     (cond ((string= $extension "el")
+            (setq $result $splitted))
+           (t
+            (b::error $inHere
+                      (s-lex-format
+                       "Unknown File Name Extension =${$extension}")))
+           )
+     $result))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
 (b:pkg|infoBasedOnFile (file-name-nondirectory buffer-file-name))
 #+END_SRC
+
+#+RESULTS:
+| b-pkg |
+
 " orgCmntEnd)
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg|topLineStr"
@@ -95,19 +121,79 @@ and side-effects are documented here
 and side-effects are documented here
 #+end_org "
    (let* (
+          ($inHere (b:log|entry (b:func$entry)))
           ($result "")
           ($fileName (file-name-nondirectory buffer-file-name))
+          ($infoBasedOnFile (b:pkg|infoBasedOnFile $fileName))
+          ($fileType)
+          ($pkgName)
          )
-     (setq $result
-           (s-lex-format ";;; ${$fileName} --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-\n"))
-        $result))
+     (setq $fileType (first $infoBasedOnFile))
+
+     (setq $pkgName (second $infoBasedOnFile))
+     (cond ((string= $fileType "bnpa")
+            (setq $result
+                  (s-lex-format
+                   ";;; ${$fileName} --- Blee Native Pkg Adoption (${$pkgName})  -*- lexical-binding: t; -*-\n")))
+           ((string= $fileType "bnpg")
+            (setq $result
+                  (s-lex-format
+                   ";;; ${$fileName} --- Blee Native Pkg Grouping (${$pkgName})  -*- lexical-binding: t; -*-\n")))
+           ((string= $fileType "bcpa")
+            (setq $result
+                  (s-lex-format
+                   ";;; ${$fileName} --- Blee Component Pkg Adoption (${$pkgName})  -*- lexical-binding: t; -*-\n")))
+           ((string= $fileType "bcpg")
+            (setq $result
+                  (s-lex-format
+                   ";;; ${$fileName} --- Blee Component Pkg Grouping (${$pkgName})  -*- lexical-binding: t; -*-\n")))
+           (t
+            (setq $result
+                  (s-lex-format
+                   ";;; ${$fileName} --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-\n")))
+           )
+     $result))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
 (b:pkg|topLineStr)
 #+END_SRC
+
+#+RESULTS:
+: ;;; b-pkg.el --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-
+
 " orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:insert:pkg/topLineStr"
+(orgCmntBegin "
+* [[elisp:(show-all)][(>]]  =defun= <<b:insert:pkg/topLineStr>> [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+(defun b:insert:pkg/topLineStr (
+;;;#+END:
+                        )
+   " #+begin_org
+** DocStr: Command:: insert the package's top-line-string.
+#+end_org "
+   (interactive)
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+         )
+     (insert (b:pkg|topLineStr))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+;;;(b:insert:pkg/topLineStr)
+#+END_SRC
+
+#+RESULTS:
+
+" orgCmntEnd)
+
+
+
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'b-pkg)
 ;;;#+END:

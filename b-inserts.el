@@ -1,8 +1,7 @@
-;;; b-log.el --- Blee Logging Library  -*- lexical-binding: t; -*-
+;;; b-inserts.el --- Blee Inserts Library  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Name Spaces== b:log b:error b:warning
-* Summary:
+* Summary: name space is b:inserts:
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
@@ -52,81 +51,38 @@
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:log|entry"
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:inserts:dblock|moded"
 (orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b:log|entry>> [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  =defun= <<b:inserts:dblock|moded>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(defun b:log|entry (
+(defun b:inserts:dblock|moded (
 ;;;#+END:
-                <inHere)
+                               <dblockNameAndPars)
    " #+begin_org
-** DocStr: return =<inHere=, unchanged. Logs =<inHere=.
+** DocStr: Based on the mode insert a dblock at point.
+*** TODO: make it be based on major mode
 #+end_org "
    (let* (
-          ($result <inHere)
-          ($funcName)
-          ($hereFile)
-          ($hereLine)          
+          ($inHere (b:log|entry (b:func$entry)))
+          ($result "")
          )
-     (when <inHere
-       (setq $funcName (first <inHere))
-       (setq $hereFile (second <inHere))
-       (setq $hereLine (third <inHere))          
-       )
-     (message
+     (insert
       (s-lex-format
-       "b:log|entry:: ${$funcName} from ${$hereFile}::${$hereLine}"))
-     $result))
+       ";;;#+BEGIN: ${<dblockNameAndPars}\n"))
+     (insert
+      (s-lex-format
+       ";;;#+END:\n"))
+     ))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-;;(b:log|entry nil \"Some Error\")
-#+END_SRC
-" orgCmntEnd)
-
-
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b::error"
-(orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b::error>> [[elisp:(org-shifttab)][<)]] E|
-" orgCmntEnd)
-(defun b::error (
-;;;#+END:
-                 <inHere <errorStr)
-   " #+begin_org
-** DocStr: Actions based on =parameters= and *returnValues*
-and side-effects are documented here
-#+end_org "
-   (let* (
-          ($result nil)
-          ($funcName)
-          ($hereFile)
-          ($hereLine)          
-          ($inHereStr "")
-          ($fullErrStr "")
-         )
-     (when <inHere
-       (setq $funcName (first <inHere))
-       (setq $hereFile (second <inHere))
-       (setq $hereLine (third <inHere))          
-       (setq $inHereStr
-             (s-lex-format
-              "${$funcName} -- ${$hereFile}::${$hereLine}")))
-     (setq $fullErrStr
-           (s-lex-format
-            "b:: ${<errorStr} -- ${$inHereStr}"))
-     (user-error $fullErrStr)
-     $result))
-
-(orgCmntBegin "
-** Basic Usage:
-#+BEGIN_SRC emacs-lisp
-(b::error nil \"Some Error\")
+(b:inserts:dblock|moded "b:elisp:file/copyLeftPlus :outLevel 1")
 #+END_SRC
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'b-log)
+(provide 'b-inserts)
 ;;;#+END:
 
 ;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
