@@ -1,7 +1,7 @@
-;;; blee-libs.el --- Blee Common and General Libraries  -*- lexical-binding: t; -*-
+;;; b-read.el --- read related facilities  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary: Main Pkg File providing b:pkg:plee-libs|version
+* Summary: Additional Blee function related facilities.
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
@@ -26,8 +26,11 @@
 ;;;#+END:
 
 (orgCmntBegin "
+* Commentary, Model and Terminology:
 * Relevant Panels:
-** [[file:/bisos/git/auth/bxRepos/blee-binders/blee-core/blee-pkgs/blee-libs/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/panels/blee-core/mail/model/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
+* Planned Improvements:
 " orgCmntEnd)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "REQUIRES" :extraInfo "Imports"
@@ -36,63 +39,58 @@
 " orgCmntEnd)
 ;;;#+END:
 
-(require 'b-file)
-(require 'b-func)
-(require 'b-inserts)
-(require 'b-log)
-(require 'b-plist)
-
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-(defvar b:pkg:blee-libs:version "0.1"
-   " #+begin_org
-** =b:pkg:blee-libs:version= version number of the entirety of blee-libs.
-#+end_org "
-  )
-
-
-;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo ""
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg:blee-libs/version"
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:read|fromFile"
 (orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b:pkg:blee-libs|version>> [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  =defun= <<b:read|fromFile>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(defun b:pkg:blee-libs/version (
+(defun b:read|fromFile (
 ;;;#+END:
-                                )
+                        <fileName)
    " #+begin_org
-** DocStr: blee-libs package version number.
+** DocStr: Reads one sexp from file. Leaves file open.
+https://emacs.stackexchange.com/questions/33586/how-to-read-elisp-file-into-s-expression
 #+end_org "
-   (interactive)
-   b:pkg:blee-libs:version)
+   (with-current-buffer (find-file-noselect <fileName)
+     (goto-char (point-min))
+     (read (current-buffer))))
+
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:pkg:blee-libs/version)
+(b:read|fromFile "./examples/mini-doom-3.0.0-alpha.el")
 #+END_SRC
 
 #+RESULTS:
-: 0.1
+| adaptive-wrap         | :repoUrl | https://github.com/emacs-straight/adaptive-wrap.git   | :commit | 5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6 |
+| add-node-modules-path | :repoUrl | https://github.com/codesuki/add-node-modules-path.git | :commit | 5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6 |
+| a.el                  | :repoUrl | https://github.com/plexus/a.el.git                    | :commit | 5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6 |
+| alert                 | :repoUrl | https://github.com/jwiegley/alert.git                 | :commit | 5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6 |
 
 " orgCmntEnd)
 
+
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'blee-libs)
+(provide 'b-read)
 ;;;#+END:
 
 ;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
-" orgCmntEnd);;; local variables:
+" orgCmntEnd)
+;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
 ;;;#+END:

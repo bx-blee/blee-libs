@@ -77,7 +77,7 @@
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:inserts:dblock|moded "b:elisp:file/copyLeftPlus :outLevel 1")
+(b:inserts:dblock|moded 'b:elisp:file/copyLeftPlus :outLevel 1')
 #+END_SRC
 " orgCmntEnd)
 

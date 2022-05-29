@@ -71,7 +71,7 @@
 (orgCmntBegin "
 ** Basic Usage: For example read two-lines of /etc/passwd, then get the first
 #+BEGIN_SRC emacs-lisp
-(first (b:file:read|nuOfLines "/etc/passwd" 2))
+(first (b:file:read|nuOfLines \"/etc/passwd\" 2))
 #+END_SRC
 
 #+RESULTS:
@@ -99,7 +99,7 @@
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:insert-file-contents|forward "/etc/motd")
+(b:insert-file-contents|forward \"/etc/motd\")
 #+END_SRC
 " orgCmntEnd)
 
@@ -125,7 +125,7 @@
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:insert-file-contents|noExtraLine "/etc/motd")
+(b:insert-file-contents|noExtraLine \"/etc/motd\")
 #+END_SRC
 " orgCmntEnd)
 
