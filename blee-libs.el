@@ -41,6 +41,8 @@
 (require 'b-inserts)
 (require 'b-log)
 (require 'b-plist)
+(require 'b-read)
+(require 'b-pkg)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
