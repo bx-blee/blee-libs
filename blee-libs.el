@@ -94,7 +94,8 @@
 ;;;#+BEGIN: b:elisp:file/endOf :outLevel 1
 (orgCmntBegin "
 * [[elisp:(show-all)][(>]] ~END-OF-FILE~  [[elisp:(org-shifttab)][<)]] E|
-" orgCmntEnd);;; local variables:
+" orgCmntEnd)
+;;; local variables:
 ;;; no-byte-compile: t
 ;;; end:
 ;;;#+END:

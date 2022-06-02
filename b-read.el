@@ -70,7 +70,7 @@ https://emacs.stackexchange.com/questions/33586/how-to-read-elisp-file-into-s-ex
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:read|fromFile "./examples/mini-doom-3.0.0-alpha.el")
+(b:read|fromFile \"./examples/mini-doom-3.0.0-alpha.el\")
 #+END_SRC
 
 #+RESULTS:

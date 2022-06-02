@@ -71,7 +71,7 @@
 (orgCmntBegin "
 ** Basic Usage: For example read two-lines of /etc/passwd, then get the first
 #+BEGIN_SRC emacs-lisp
-(first (b:file:read|nuOfLines \"/etc/passwd\" 2))
+(cl-first (b:file:read|nuOfLines \"/etc/passwd\" 2))
 #+END_SRC
 
 #+RESULTS:
@@ -92,7 +92,7 @@
 #+end_org "
   (let* (
          ($gotVal (insert-file-contents <fileName))
-         ($charsInserted (second $gotVal))
+         ($charsInserted (cl-second $gotVal))
          )
     (forward-char $charsInserted)))
 

@@ -78,9 +78,10 @@
 " orgCmntEnd)
 (defun b:pkg|infoBasedOnFile (
 ;;;#+END:
-                                 <fileName)
+                              <fileName)
    " #+begin_org
-** DocStr: Given =<fileName= return relevant as list.
+** DocStr: Given =<fileName= return relevant file info as list.
+File name is that of a pkg. With .el extenstion and pre : type tag.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
@@ -128,9 +129,9 @@ and side-effects are documented here
           ($fileType)
           ($pkgName)
          )
-     (setq $fileType (first $infoBasedOnFile))
+     (setq $fileType (cl-first $infoBasedOnFile))
 
-     (setq $pkgName (second $infoBasedOnFile))
+     (setq $pkgName (cl-second $infoBasedOnFile))
      (cond ((string= $fileType "bnpa")
             (setq $result
                   (s-lex-format

@@ -69,9 +69,9 @@
           ($hereLine)          
          )
      (when <inHere
-       (setq $funcName (first <inHere))
-       (setq $hereFile (second <inHere))
-       (setq $hereLine (third <inHere))          
+       (setq $funcName (cl-first <inHere))
+       (setq $hereFile (cl-second <inHere))
+       (setq $hereLine (cl-third <inHere))
        )
      (message
       (s-lex-format
@@ -106,9 +106,9 @@ and side-effects are documented here
           ($fullErrStr "")
          )
      (when <inHere
-       (setq $funcName (first <inHere))
-       (setq $hereFile (second <inHere))
-       (setq $hereLine (third <inHere))          
+       (setq $funcName (cl-first <inHere))
+       (setq $hereFile (cl-second <inHere))
+       (setq $hereLine (cl-third <inHere))
        (setq $inHereStr
              (s-lex-format
               "${$funcName} -- ${$hereFile}::${$hereLine}")))

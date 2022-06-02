@@ -67,8 +67,8 @@ Used by the likes of [[b~:func:compileTimeName]]
         (index 5))
     (while (setq frame (backtrace-frame index))
       (push frame frames)
-      (incf index))
-    (remove-if-not 'car frames)))
+      (cl-incf index))
+    (cl-remove-if-not 'car frames)))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -100,9 +100,9 @@ Uses [[b::call-stack]].
 #+end_org "
    (symbol-name
     (cadadr
-     (third
-      (find-if (lambda (frame) (ignore-errors (equal (car (third frame)) 'defalias)))
-               (reverse (call-stack)))))))
+     (cl-third
+      (cl-find-if (lambda (frame) (ignore-errors (equal (car (cl-third frame)) 'defalias)))
+               (reverse (b::call-stack)))))))
 
 (orgCmntBegin "
 ** Basic Usage: Should be used from with in a function.
