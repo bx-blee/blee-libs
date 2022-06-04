@@ -48,9 +48,6 @@
 " orgCmntEnd)
 ;;;#+END:
 
-(orgCmntBegin "
-* defconst <<b:pkg:adoption::types>>
-" orgCmntEnd)
 (defconst
   b:pkg:adoption::types
   `(
