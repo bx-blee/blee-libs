@@ -55,8 +55,10 @@
   b:pkg:adoption::types
   `(
     bnpa "bnpa"  ; Blee Native Package Adoption
+    b:npa "b:npa"  ; Blee Native Package Adoption	 
     bnpg "bnpg"  ; Blee Native Packages Grouping
     bcpa "bcpa"  ; Blee Component Package Adoption
+    bcpa "b:cpa"  ; Blee Component Package Adoption    
     bcpg "bcpg"  ; Blee Component Packages Grouping
     )
   " #+begin_org

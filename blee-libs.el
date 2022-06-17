@@ -43,6 +43,7 @@
 (require 'b-plist)
 (require 'b-read)
 (require 'b-pkg)
+(require 'b-common-advice)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
