@@ -44,6 +44,7 @@
 (require 'b-read)
 (require 'b-pkg)
 (require 'b-common-advice)
+(require 'b-org-mode)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
@@ -66,7 +67,7 @@
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:pkg:blee-libs/version"
 (orgCmntBegin "
-* [[elisp:(show-all)][(>]]  =defun= <<b:pkg:blee-libs|version>> [[elisp:(org-shifttab)][<)]] E|
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      ::  =defun= <<b:pkg:blee-libs/version>>   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
 (defun b:pkg:blee-libs/version (
 ;;;#+END:
