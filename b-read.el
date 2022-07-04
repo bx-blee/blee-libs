@@ -62,9 +62,13 @@
 ** DocStr: Reads one sexp from file. Leaves file open.
 https://emacs.stackexchange.com/questions/33586/how-to-read-elisp-file-into-s-expression
 #+end_org "
-   (with-current-buffer (find-file-noselect <fileName)
-     (goto-char (point-min))
-     (read (current-buffer))))
+   (if (file-exists-p <fileName)
+       (progn
+	 (with-current-buffer (find-file-noselect <fileName)
+	   (goto-char (point-min))
+	   (read (current-buffer))))
+     (progn
+       (error (s-lex-format "Missing file: ${<fileName}")))))
 
 
 (orgCmntBegin "
