@@ -1,12 +1,12 @@
-;;; b-inserts.el --- Blee Inserts Library  -*- lexical-binding: t; -*-
+;;; b-shell.el --- b:shell facilities  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary: name space is b:inserts:
+* Summary: Additional facilities to manipulate (read, write) files.
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:elisp:file/copyLeftPlus :outLevel 1
 (orgCmntBegin "
-* *[[elisp:(org-cycle)][| Proclamations |]]* :: Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
+* Libre-Halaal Software --- Part Of Blee ---  Poly-COMEEGA Format.
 ** This is Libre-Halaal Software. © Libre-Halaal Foundation. Subject to AGPL.
 ** It is not part of Emacs. It is part of Blee.
 ** Best read and edited  with Poly-COMEEGA (Polymode Colaborative Org-Mode Enhance Emacs Generalized Authorship)
@@ -15,7 +15,7 @@
 
 ;;;#+BEGIN: b:elisp:file/authors :authors ("./inserts/authors-mb.org")
 (orgCmntBegin "
-** Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
+* Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
 " orgCmntEnd)
 ;;;#+END:
 
@@ -27,10 +27,8 @@
 ;;;#+END:
 
 (orgCmntBegin "
-* Commentary, Model and Terminology:
 * Relevant Panels:
-** [[file:/bisos/panels/blee-core/mail/model/_nodeBase_/fullUsagePanel-en.org]]
-** [[file:/bisos/panels/blee-core/mail/Gnus/_nodeBase_/fullUsagePanel-en.org]]
+** [[file:/bisos/git/auth/bxRepos/blee-binders/blee-core/blee-pkgs/blee-libs/_nodeBase_/fullUsagePanel-en.org]]
 * Planned Improvements:
 " orgCmntEnd)
 
@@ -52,80 +50,34 @@
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:inserts:dblock|moded"
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:shell-command-to-string|cleansed"
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:inserts:dblock|moded>>   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:shell-command-to-string|cleansed>>   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:inserts:dblock|moded (
+(defun b:shell-command-to-string|cleansed (
 ;;;#+END:
-                               <dblockNameAndPars)
+                                           <inCmnd)
    " #+begin_org
-** DocStr: Based on the mode insert a dblock at point.
-*** TODO: make it be based on major mode
+** DocStr: Strip the trailing \n
 #+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          ($majorModePrefix (b:major-mode:comment|lineStr))
-          ($result "")
-         )
-     (insert
-      (s-lex-format
-       "${$majorModePrefix}#+BEGIN: ${<dblockNameAndPars}\n"))
-     (insert
-      (s-lex-format
-       "${$majorModePrefix}#+END:\n"))
-     ))
+   (substring
+    (shell-command-to-string <inCmnd)
+        0 -1))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:inserts:dblock|moded \"b:elisp:file/copyLeftPlus :outLevel 1\")
+(b:shell-command-to-string|cleansed (symbol-name 'date))
 #+END_SRC
 
 #+RESULTS:
+: Sat 26 Nov 2022 11:13:13 AM PST
 
 " orgCmntEnd)
-
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:inserts:dblock|majorSection"
-(orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:inserts:dblock|majorSection>>   [[elisp:(org-cycle)][| ]]
-" orgCmntEnd)
-(cl-defun b:inserts:dblock|majorSection (
-;;;#+END:
-                                         &key
-                                         (outLevel 0)
-                                         (sep nil)
-                                         (title "Missing Title")
-                                         (anchor "")
-                                         (extraInfo "")
-                                         )
-   " #+begin_org
-** DocStr: majorSection with key params.
-#+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          ($result "")
-         )
-     (b:inserts:dblock|moded
-      (s-lex-format
-       "blee:bxPanel:foldingSection \
-:outLevel ${outLevel} :sep ${sep} :title \"${title}\" :anchor \"${anchor}\"  :extraInfo \"${extraInfo}\""))))
-
-
-(orgCmntBegin "
-** Basic Usage:
-#+BEGIN_SRC emacs-lisp
-(b:inserts:dblock|majorSection :outLevel 0 :title (symbol-name 'someTitle) :extraInfo (symbol-name 'someExtra))
-#+END_SRC
-
-#+RESULTS:
-
-" orgCmntEnd)
-
 
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'b-inserts)
+(provide 'b-shell)
 ;;;#+END:
 
 ;;;#+BEGIN: b:elisp:file/endOf :outLevel 1

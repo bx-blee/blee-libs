@@ -56,13 +56,31 @@
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:org-mode|folded?"
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:org-mode|forSureIsUnFolded?"
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      ::  <<b:org-mode|folded?>>   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      ::  <<b:org-mode|forSureIsUnFolded?>>   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:org-mode|folded? (
+(defun b:org-mode|forSureIsUnFolded? (
 ;;;#+END:
                       )
+   " #+begin_org
+** DocStr: Return non-nil if point is on a unfolded headline.
+We can determine for sure when the headline is unfolded.
+But the opposit can have false positivies.
+#+end_org "
+  (not
+   (and (or (org-at-heading-p)
+            (org-at-item-p))
+        (invisible-p (point-at-eol)))))
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:org-mode|falsePositiveFolded?"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      ::  <<b:org-mode|falsePositiveFolded?>>   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:org-mode|falsePositiveFolded? (
+;;;#+END:
+                                        )
    " #+begin_org
 ** DocStr: Return non-nil if point is on a folded headline or plain list item.
 Some unfoldings, still have (invisible-p (point-at-eol) as t and as a result,
@@ -92,12 +110,14 @@ This is a band-aid solution. We should look for a better solution.
 ;;;#+END:
                                     )
   " #+begin_org
-** DocStr: outline-show-subtree or org-cycle, if already showing.
+** DocStr: outline-show-subtree or org-cycle, if already showing (unfolded).
+Since, outline-show-subtree fully unfolds, unlike outline-show-branches,
+we don't need to worry about false positives.
 #+end_org "
   (interactive)
-  (if (b:org-folded?)
-      (outline-show-subtree)
-     (org-cycle)))
+  (if (b:org-mode|forSureIsUnFolded?)
+      (org-cycle)
+    (outline-show-subtree)))
 
 
 (orgCmntBegin "
@@ -126,15 +146,24 @@ But not this.
                                     )
   " #+begin_org
 ** DocStr: outline-show-branches or org-cycle, if already showing.
+As we are using b:org-mode|falsePositiveFolded? , we could end up
+no just showing branches the first time. Cycling through it produces
+the right results.
 #+end_org "
   (interactive)
-  (if (b:org-mode|folded?)
+  (when (b:org-mode|forSureIsUnFolded?)
+     (org-cycle)
+     ;;(message "FOR-SURE")
+     (setq b:org-mode:isFolded? t))
+  (if (b:org-mode|falsePositiveFolded?)
       (progn
         (outline-show-branches)
+        ;;(message (s-lex-format "SHOW-BRANCHES ${b:org-mode:isFolded?}"))
         (setq b:org-mode:isFolded? nil))
     (progn
-     (org-cycle)
-     (setq b:org-mode:isFolded? t))))
+      (org-cycle)
+      ;;(message (s-lex-format "ORG-CYCLE ${b:org-mode:isFolded?}"))
+      (setq b:org-mode:isFolded? t))))
 
 
 (orgCmntBegin "

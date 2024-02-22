@@ -133,9 +133,18 @@
 
 
 (defun bx:file-string (file)
-    "Read the contents of a file and return as a string."
-    (with-current-buffer (find-file-noselect file)
-      (buffer-string)))
+    "Read the contents of a file and return as a string.
+find-file-noselect prompts if $baseDir does not exist.
+"
+    (let* (
+           ($baseDir (file-name-directory file))
+           ($result (s-lex-format "PROBLEM: Missing FV ${file}"))
+           )
+      (when (file-directory-p $baseDir)
+        (setq $result
+              (with-current-buffer (find-file-noselect file)
+                (buffer-string))))
+      $result))
 
 (defun file-string-bx (file)
   (bx:file-string file)
