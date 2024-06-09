@@ -112,7 +112,6 @@ Module description comes here.
 ** DocStr: Given a <choiceVal of a given <customVar, get the choice (as a list) or nil.
 #+end_org "
    (let* (
-          ($inHere (b:log|entry (b:func$entry)))
           ($custom-type (get <customVar 'custom-type))
           ($result nil)
           )
@@ -149,12 +148,9 @@ Module description comes here.
    " #+begin_org
 ** DocStr: Given a <choice of a defcustom, return the <nth element.
 #+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          )
      (if (and (listp <choice) (eq (car <choice) 'const))
          (nth <nth <choice)
-       <choice)))
+       <choice))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -190,7 +186,7 @@ Module description comes here.
 ** DocStr: Get list of *labels* of choices for a given <customVar.
 #+end_org "
    (let* (
-          ($inHere (b:log|entry (b:func$entry)))
+          ;;; ($inHere (b:log|entry (b:func$entry)))
           ($custom-type (get <customVar 'custom-type))
           )
      (when (and $custom-type (eq (car $custom-type) 'choice))
@@ -222,7 +218,6 @@ Module description comes here.
 ** DocStr: Get list of *values* of choices for a given <customVar.
 #+end_org "
    (let* (
-          ($inHere (b:log|entry (b:func$entry)))
           ($custom-type (get <customVar 'custom-type))
           )
      (when (and $custom-type (eq (car $custom-type) 'choice))
@@ -253,7 +248,7 @@ Module description comes here.
 ** DocStr: Get list of *documentation* of choices for a given <customVar.
 #+end_org "
    (let* (
-          ($inHere (b:log|entry (b:func$entry)))
+          ;;; ($inHere (b:log|entry (b:func$entry)))
           ($custom-type (get <customVar 'custom-type))
           )
      (when (and $custom-type (eq (car $custom-type) 'choice))
@@ -283,10 +278,7 @@ Module description comes here.
    " #+begin_org
 ** DocStr: Get of choices list. (length (b:var:custom:choices|getLabels <customVar))
 #+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          )
-     (length (b:var:custom:choices|getLabels <customVar))))
+     (length (b:var:custom:choices|getLabels <customVar)))
 
 
 (orgCmntBegin "
@@ -313,10 +305,7 @@ Module description comes here.
    " #+begin_org
 ** DocStr: Validate that <choiceVal is one of valid values of choices of  <customVar.
 #+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          )
-     (-contains? (b:var:custom:choices|getVals <customVar) <choiceVal)))
+   (-contains? (b:var:custom:choices|getVals <customVar) <choiceVal))
 
 
 
@@ -355,14 +344,14 @@ Module description comes here.
 ** DocStr: (setq <customVar <choiceVal) after validation through [[b:var:custom:choices|validate]].
 #+end_org "
    (let* (
-          ($inHere (b:log|entry (b:func$entry)))
+          ($inHere "ignore: is used in b:log|entry")
           )
      (if (b:var:custom:choices|validate <customVar <choiceVal)
          (progn
            ;; (setq <customVar <choiceVal)
            (customize-set-variable <customVar <choiceVal)
            )
-       (error (s-lex-format "invalid assignment of ${<choiceVal} to ${<customVar} -- ${$inHere}")))))
+       (error (s-lex-format "invalid assignment of ${<choiceVal} to ${<customVar} -- b:var:custom:choices|set")))))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -400,12 +389,10 @@ Module description comes here.
    " #+begin_org
 ** DocStr: Given a <choiceVal for a given <customVar return =choiceLabel=.
 #+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          )
+
      (b:var:custom:choice|nthElement
       (b:var:custom:choices|getChoice <customVar <choiceVal)
-      2)))
+      2))
 
 
 (orgCmntBegin "
