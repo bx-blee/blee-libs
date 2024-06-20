@@ -1246,6 +1246,147 @@ keywords are supported:
 " orgCmntEnd)
 
 
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Obsoleted" :extraInfo "absorbed from b-log.el"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Obsoleted_: |]]  absorbed from b-log.el  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
+
+
+(make-obsolete 'b::error 'b|error "June 2024")
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b::error"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b::error>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b::error (
+;;;#+END:
+                 <inHere <errorStr)
+   " #+begin_org
+** DocStr: Issues a user-error
+*** Returns: (string) error msg
+#+end_org "
+
+   (declare (obsolete "Use b|error instead" "June 2024"))
+
+   (let* (
+          ($result nil)
+          ($funcName)
+          ($hereFile)
+          ($hereLine)
+          ($inHereStr "")
+          ($fullErrStr "")
+         )
+     (when <inHere
+       (setq $funcName (cl-first <inHere))
+       (setq $hereFile (cl-second <inHere))
+       (setq $hereLine (cl-third <inHere))
+       (setq $inHereStr
+             (s-lex-format
+              "${$funcName} -- ${$hereFile}::${$hereLine}")))
+     (setq $fullErrStr
+           (s-lex-format
+            "b:: ${<errorStr} -- ${$inHereStr}"))
+     (user-error $fullErrStr)
+     (setq $result $fullErrStr)
+     ))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b::error nil (symbol-name 'SomeError))
+#+END_SRC
+
+#+RESULTS:
+" orgCmntEnd)
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(let* ((inHere (b:log|entry (b:func$entry)))) (b::error inHere (symbol-name 'SomethingHappened)))
+#+END_SRC
+
+#+RESULTS:
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:log|msg"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:log|msg>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:log|msg (
+;;;#+END:
+                     <inStr
+                     &key
+                     (inHere nil)
+                     )
+   " #+begin_org
+** DocStr: Uses inhibit-message for logging as *message* , optionally accepts inHere
+*** Returns: (string) logged message
+#+end_org "
+
+   (let* (
+          ($result nil)
+          ($funcName)
+          ($hereFile)
+          ($hereLine)
+          ($inHereStr "")
+          ($fullOutStr "")
+         )
+     (when inHere
+       (setq $funcName (cl-first inHere))
+       (setq $hereFile (cl-second inHere))
+       (setq $hereLine (cl-third inHere))
+       (setq $inHereStr
+             (s-lex-format
+              " -- ${$funcName} -- ${$hereFile}::${$hereLine}")))
+     (setq $fullOutStr
+           (s-lex-format
+            "b:: ${<inStr}${$inHereStr}"))
+
+     (let ((inhibit-message t))
+       (message $fullOutStr))
+     (setq $result $fullOutStr)
+     ))
+
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:log|msg (symbol-name 'SomethingHappened))
+#+END_SRC
+
+#+RESULTS:
+: b:: SomethingHappened
+
+" orgCmntEnd)
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(let* ((inHere (b:log|entry (b:func$entry)))) (b:log|msg (symbol-name 'SomethingHappened) :inHere inHere))
+#+END_SRC
+
+#+RESULTS:
+: b:: SomethingHappened -- nil -- /bisos/git/auth/bxRepos/blee/blee-libs/b-log.el::183
+
+" orgCmntEnd)
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(progn (defun ex1 () (let* ((inHere (b:log|entry (b:func$entry)))) (b:log|msg (symbol-name 'SomethingHappened) :inHere inHere))) (ex1))
+#+END_SRC
+
+#+RESULTS:
+: b:: SomethingHappened -- nil -- /bisos/git/auth/bxRepos/blee/blee-libs/b-log.el::194
+
+" orgCmntEnd)
+
+
+
+
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "b:tlm Testing" :extraInfo "Interactive"
 (orgCmntBegin "
@@ -1377,6 +1518,8 @@ keywords are supported:
 : b:: SomethingHappened
 
 " orgCmntEnd)
+
+
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'b:tlm)
