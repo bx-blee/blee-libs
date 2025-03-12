@@ -59,10 +59,15 @@
                                            <inCmnd)
    " #+begin_org
 ** DocStr: Strip the trailing \n
-#+end_org "
+Previous unreliable implementation was:   
    (substring
     (shell-command-to-string <inCmnd)
         0 -1))
+
+#+end_org "
+   (replace-regexp-in-string
+    "\n$" "" 
+    (shell-command-to-string <inCmnd)))
 
 (orgCmntBegin "
 ** Basic Usage:
