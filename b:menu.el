@@ -1,4 +1,4 @@
-;;; b:menu.el --- read related facilities  -*- lexical-binding: t; -*-
+;;; b:menu.el --- Blee menu related facilities  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
 * Summary: Additional Blee function related facilities.

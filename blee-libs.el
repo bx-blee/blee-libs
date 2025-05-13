@@ -46,6 +46,7 @@
 (require 'b-pkg)
 (require 'b-common-advice)
 (require 'b-org-mode)
+(require 'b:menu)
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
